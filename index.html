@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Raumpsychologie – Nervensystem deines Zuhauses</title>
+  <meta name="theme-color" content="#f4f7f6" />
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="icons/icon-512.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>🪴 Raumpsychologie</h1>
+    <div class="actions">
+      <button id="btn-scan" class="primary">RaumScan</button>
+      <button id="btn-history">Verlauf</button>
+      <select id="lang" title="Sprache / Language">
+        <option value="de" selected>DE</option>
+        <option value="en">EN</option>
+      </select>
+      <button id="btn-theme" title="Hell/Dunkel">☾</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro card" id="intro">
+      <p id="introText">
+        Dein Zuhause spricht mit deinem Nervensystem – über <b>Boden</b>, <b>Luft</b>, <b>Licht</b>, <b>Klang</b> und <b>Ordnung</b>.
+        Lerne zu „hören“, und du steuerst Ruhe aktiv.
+      </p>
+    </section>
+
+    <section class="grid" id="areas">
+      <article class="tile" data-area="boden">
+        <h2>🧱 Boden</h2>
+        <p class="muted">Deine Basis: sauber & ruhig = Erdung</p>
+        <button class="ghost" data-open="boden">Öffnen</button>
+      </article>
+      <article class="tile" data-area="luft">
+        <h2>💨 Luft</h2>
+        <p class="muted">Frische Luft = Präsenz & Klarheit</p>
+        <button class="ghost" data-open="luft">Öffnen</button>
+      </article>
+      <article class="tile" data-area="licht">
+        <h2>💡 Licht</h2>
+        <p class="muted">Weiches Licht = Sicherheitsgefühl</p>
+        <button class="ghost" data-open="licht">Öffnen</button>
+      </article>
+      <article class="tile" data-area="klang">
+        <h2>🔊 Klang</h2>
+        <p class="muted">Sanfte Klänge beruhigen Rhythmus</p>
+        <button class="ghost" data-open="klang">Öffnen</button>
+      </article>
+      <article class="tile" data-area="ordnung">
+        <h2>🧺 Ordnung</h2>
+        <p class="muted">Klare Flächen = leiser Kopf</p>
+        <button class="ghost" data-open="ordnung">Öffnen</button>
+      </article>
+    </section>
+
+    <!-- RaumScan -->
+    <section class="card hidden" id="scan">
+      <h2>🔎 RaumScan</h2>
+      <p class="muted" id="scanHint">Schiebe je Bereich: 1 = unruhig, 10 = sehr ruhig</p>
+
+      <div class="slider-row">
+        <label>🧱 Boden <output id="out-boden">5</output></label>
+        <input id="s-boden" type="range" min="1" max="10" value="5" />
+      </div>
+      <div class="slider-row">
+        <label>💨 Luft <output id="out-luft">5</output></label>
+        <input id="s-luft" type="range" min="1" max="10" value="5" />
+      </div>
+      <div class="slider-row">
+        <label>💡 Licht <output id="out-licht">5</output></label>
+        <input id="s-licht" type="range" min="1" max="10" value="5" />
+      </div>
+      <div class="slider-row">
+        <label>🔊 Klang <output id="out-klang">5</output></label>
+        <input id="s-klang" type="range" min="1" max="10" value="5" />
+      </div>
+      <div class="slider-row">
+        <label>🧺 Ordnung <output id="out-ordnung">5</output></label>
+        <input id="s-ordnung" type="range" min="1" max="10" value="5" />
+      </div>
+
+      <div id="scan-result" class="badge">–</div>
+      <div class="row">
+        <button id="btn-save" class="primary">Heute speichern</button>
+        <button id="btn-clear">Zurück</button>
+      </div>
+    </section>
+
+    <!-- Verlauf -->
+    <section class="card hidden" id="history">
+      <h2>📅 Verlauf (letzte 14 Tage)</h2>
+      <div id="history-bars" class="bars"></div>
+      <div class="row">
+        <button id="btn-reset" class="danger">Verlauf löschen</button>
+        <button id="btn-back">Zurück</button>
+      </div>
+    </section>
+
+    <!-- Detail-Overlays -->
+    <dialog id="dlg-boden" class="sheet">
+      <h3>🧱 Boden – Deine Basis</h3>
+      <p>Unruhig/verschmutzt → Wachsamkeit. Sauber/ruhig → Erdung & Vertrauen.</p>
+      <ul class="tips">
+        <li>1 m² bewusst reinigen, dann 10 Sek. anschauen & atmen.</li>
+        <li>Barfuß stehen: „Hier trage ich mich selbst.“</li>
+        <li>Einmal pro Tag: <b>komplett freie Fläche</b> erleben.</li>
+      </ul>
+      <button data-close>Schließen</button>
+    </dialog>
+
+    <dialog id="dlg-luft" class="sheet">
+      <h3>💨 Luft – Dein Atemfeld</h3>
+      <p>Frische Luft = Wachheit, schwere Luft = Müdigkeit.</p>
+      <ul class="tips">
+        <li>2 Minuten querlüften, dann Hand an die Haut: „Frische spüren“.</li>
+        <li>Pflanze/n oder Duft (Zeder/Lavendel) für Verankerung.</li>
+        <li>Abends kurz lüften → besserer Schlaf.</li>
+      </ul>
+      <button data-close>Schließen</button>
+    </dialog>
+
+    <dialog id="dlg-licht" class="sheet">
+      <h3>💡 Licht – dein innerer Rhythmus</h3>
+      <p>Weiches, warmes Licht signalisiert Sicherheit.</p>
+      <ul class="tips">
+        <li>3 Zonen: Arbeitslicht / Raumlicht / Ruhepunkt (Lampe/Kerze).</li>
+        <li>Abends dimmen, direkte Deckenstrahler meiden.</li>
+        <li>Morgens Tageslicht ans Gesicht (Fensterblick).</li>
+      </ul>
+      <button data-close>Schließen</button>
+    </dialog>
+
+    <dialog id="dlg-klang" class="sheet">
+      <h3>🔊 Klang – unsichtbare Ordnung</h3>
+      <p>Stimmen/Lärm halten dein System wachsam.</p>
+      <ul class="tips">
+        <li>1 Minute Geräusche scannen → bewusst entscheiden, was bleibt.</li>
+        <li>Leise Natur-/Instrumentalspur statt TV-Geschnatter.</li>
+        <li>Echo brechen: Vorhänge/Teppich mindern Härte.</li>
+      </ul>
+      <button data-close>Schließen</button>
+    </dialog>
+
+    <dialog id="dlg-ordnung" class="sheet">
+      <h3>🧺 Ordnung – Spiegel des Geistes</h3>
+      <p>Klare Flächen = ruhiger Kopf.</p>
+      <ul class="tips">
+        <li>Eine sichtbare Fläche täglich leer halten (z. B. Tisch).</li>
+        <li>10-Minuten-Abschlussritual: Dinge heimbringen.</li>
+        <li>Satz verankern: „Hier ist nichts zu tun.“</li>
+      </ul>
+      <button data-close>Schließen</button>
+    </dialog>
+  </main>
+
+  <footer class="foot">
+    <small>© 2025 – Raumpsychologie (DE/EN) • lokal, privat</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
